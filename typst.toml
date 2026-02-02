@@ -2,7 +2,7 @@
 name = "uow"
 version = "0.1.0"
 entrypoint = "lib/lib.typ"
-authors = ["The Typst Project Developers"]
+authors = ["Zack Hankin <admin@hankin.io>"]
 license = "MIT"
 description = "Functions and Templates used for writing theses and assignments at UoW"
 
