@@ -11,7 +11,14 @@
 #show: equate.with(breakable: true, sub-numbering: true)
 #set math.equation(numbering: "(1.1)")
 
-#let authors = (author(firstname: "Zack", lastname: "Hankin", id: 19201298),)
+#let authors = (
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+)
 
 #show: assignment.with(
     authors: authors,
