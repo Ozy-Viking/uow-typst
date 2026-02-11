@@ -1,25 +1,23 @@
 #import "./pages/cover.typ": cover-page
 #import "./pages/outline.typ": *
-#import "classes.typ": author
+#import "structs.typ": author
 
 #import "./utility.typ": *
 
-#let default-values = (header-options: (
-    h1: (above: 25pt, below: 45pt, font-size: 21pt, weight: 600, new-page: true, extra_top_margin: 70pt),
-    h2: (above: 30pt, below: 25pt, font-size: 14pt, weight: 500, new-page: false),
-    h3: (above: 20pt, below: 15pt, font-size: 11pt, weight: 500, new-page: false),
-))
+#let default-values = (
+    header-options: (
+        h1: (above: 25pt, below: 45pt, font-size: 21pt, weight: 600, new-page: true, extra_top_margin: 70pt),
+        h2: (above: 30pt, below: 25pt, font-size: 14pt, weight: 500, new-page: false),
+        h3: (above: 20pt, below: 15pt, font-size: 11pt, weight: 500, new-page: false),
+    ),
+    cover-page-options: (max-author-cols: 4, author-cols-width: 80%, author-bottom-offset: -25%),
+    logo-options: (dx: 20mm, dy: -20mm, logo: image("assets/uow-logo-primary.png", width: 300pt)),
+)
 
-/// - title (content | none): Document title
-/// - author (array | dictionary): Author/s of document
-/// - margin (margin | auto): Page general margin.
-/// - has-cover-page (boolean): Whether a cover page is needed.
-/// - body (content): The Document
-/// -> content
 #let assignment(
     title: none,
     course: "",
-    authors: (author(firstname: "", lastname: "", id: 0, institution: "UoW"),),
+    authors: (author("", "", id: 0, institution: "UoW"),),
     margin: (left: 30mm, top: 30mm, right: 30mm, bottom: 30mm),
     header-options: default-values.header-options,
     is-thesis: false,
@@ -28,14 +26,18 @@
     supervisors: (),
     show-outline: false,
     show-outline-figures: false,
+    cover-page-options: (:),
+    logo-options: (:),
     pre-content: none,
     post-content: none,
     body,
 ) = {
-    // So you can pass in partial settings
+    // So you can pass in partial settings otherwise default values.
     header-options.h1 = default-values.header-options.h1 + header-options.h1
     header-options.h2 = default-values.header-options.h2 + header-options.h2
     header-options.h3 = default-values.header-options.h3 + header-options.h3
+    cover-page-options = default-values.cover-page-options + cover-page-options
+    logo-options = default-values.logo-options + logo-options
 
     let PAGE_MARGIN_TOP = margin.top
     let THESIS_HEADING_EXTRA_TOP_MARGIN = header-options.h1.extra_top_margin
@@ -110,6 +112,8 @@
                 submission-date: submission-date,
                 course: course,
                 supervisors: supervisors,
+                logo-options: logo-options,
+                ..cover-page-options,
             )
         }
         counter(page).update(1)
@@ -151,12 +155,12 @@
         }
         it
     }
+
     if show-outline {
         set page(numbering: none)
         include "pages/outline.typ"
-        pagebreak(weak: true)
-        counter(page).update(1)
     }
+    counter(page).update(1)
 
     if show-outline-figures {
         outline(target: figure.where(kind: image), title: [Figures])

@@ -9,21 +9,20 @@
 #register-glossary(glossary-entry-list)
 
 #show: equate.with(breakable: true, sub-numbering: true)
-#set math.equation(numbering: "(1.1)")
+#set math.equation(numbering: "(1.1.)")
 
 #let authors = (
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
-    author(firstname: "Zack", lastname: "Hankin", id: 19201298),
+    author("Zack", "Hankin", id: 19201298),
+    // author("Zack", "Hankin", id: 19201298),
+    // author("Zack", "Hankin", id: 19201298),
+    // author("Zack", "Hankin", id: 19201298),
+    // author("Zack", "Hankin", id: 19201298),
+    // author("Zack", "Hankin", id: 19201298),
 )
 
 #show: assignment.with(
     authors: authors,
-    title: "Topic of the Century",
-    has-cover-page: true,
+    title: "Cryptography: A redicover of hacking the unhackable",
     course: "CSCI927 Modern Cryptography",
     supervisors: ("Prof. Rosa Hankin", "Dr. Jack Smith"),
     is-thesis: true,
@@ -36,19 +35,25 @@
     ),
     show-outline: true,
     show-outline-figures: true,
+    has-cover-page: true,
+    logo-options: (dx: 30mm),
+    cover-page-options: (max-author-cols: 3, author-cols-width: 100%, author-bottom-offset: -28%),
     pre-content: {
         include "./abstract.typ"
+
         heading("Abbreviations")
         print-glossary(abbreviations-entry-list)
     },
     post-content: {
         heading("Glossary")
         print-glossary(glossary-entry-list)
-        bibliography(("bibliography/bib.bib", "bibliography/bib.yaml"), style: "harvard-cite-them-right")
+
+        bibliography(("bibliography/bib.bib", "bibliography/bib.yaml"), style: "./bibliography/uow-harvard.csl")
     },
 )
 
 #include "chapters/1-introduction.typ"
 #include "chapters/2-math.typ"
 #include "chapters/3-figures.typ"
+#include "chapters/4-citing.typ"
 
